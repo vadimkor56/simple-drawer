@@ -96,6 +96,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     render();
 
+    var cur_color = document.querySelector('#color-picker').value;
+    var cur_color_index = 0;
+    var all_colors = [cur_color];
+
+    $("#color-picker").on('blur', function () {
+        if (cur_color !== document.querySelector('#color-picker').value) {
+            all_colors.push(document.querySelector('#color-picker').value);
+            cur_color_index += 1;
+            cur_color = document.querySelector('#color-picker').value;
+        }
+    });
+
+    $("#back-btn").click(function () {
+       if (cur_color_index === 0) {
+           return
+       }
+       cur_color = all_colors[cur_color_index - 1];
+       cur_color_index -= 1;
+       document.querySelector('#color-picker').value = cur_color;
+    });
+
+    $("#forward-btn").click(function () {
+        if (cur_color_index === all_colors.length - 1) {
+           return
+       }
+       cur_color = all_colors[cur_color_index + 1];
+       cur_color_index += 1;
+       document.querySelector('#color-picker').value = cur_color;
+    });
+
+
     var width = document.getElementById('draw').clientWidth;
     var height = document.getElementById('draw').clientHeight;
 
